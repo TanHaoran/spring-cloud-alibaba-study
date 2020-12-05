@@ -1,0 +1,16 @@
+## actuator 健康检查
+management:
+  endpoint:
+    health: 
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        ## 激活 actuator 端点
+        include: '*'
+        
+## 描述应用
+info:
+  app-name: spring-boot-demo
+  author: jerry
+  email: thrforever@126.com

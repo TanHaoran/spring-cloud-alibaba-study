@@ -1,16 +1,36 @@
-## actuator 健康检查
+# 所有环境公用的配置属性
+# actuator 健康检查
 management:
   endpoint:
-    health: 
+    health:
       show-details: always
   endpoints:
     web:
       exposure:
-        ## 激活 actuator 端点
+        # 激活 actuator 端点
         include: '*'
-        
-## 描述应用
+# 描述应用
 info:
   app-name: spring-boot-demo
   author: jerry
   email: thrforever@126.com
+spring:
+  profiles:
+    active: dev
+---
+# 开发环境
+spring:
+  config:
+    activate:
+      on-profile: dev
+---
+# 生产环境
+spring:
+  config:
+    activate:
+      on-profile: prod
+server:
+  tomcat:
+    max-connections: 1000
+    threads:
+      max: 300

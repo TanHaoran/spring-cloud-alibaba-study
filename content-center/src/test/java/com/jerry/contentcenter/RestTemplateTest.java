@@ -18,13 +18,13 @@ public class RestTemplateTest {
     @Test
     public void test() {
         RestTemplate restTemplate = new RestTemplate();
-        String object = restTemplate.getForObject("http://localhost:8080/users/1", String.class);
-        String object2 = restTemplate.getForObject("http://localhost:8080/users/{id}", String.class, 2);
-        ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:8080/users/{id}",
-                String.class, 2);
-        System.out.println(object);
-        System.out.println(object2);
-        System.out.println(entity);
+//        String object = restTemplate.getForObject("http://localhost:8080/users/1", String.class);
+//        String object2 = restTemplate.getForObject("http://localhost:8080/users/{id}", String.class, 2);
+//        ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:8080/users/{id}",
+//                String.class, 2);
+//        System.out.println(object);
+//        System.out.println(object2);
+//        System.out.println(entity);
     }
 
 }

@@ -5,3 +5,10 @@ spring:
       username: root
       password: 19881122yl^
       driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        # nacos server 的地址
+        server-addr: localhost:8848
+  application:
+    name: user-center

@@ -1,8 +1,7 @@
 package com.jerry.contentcenter;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 /**

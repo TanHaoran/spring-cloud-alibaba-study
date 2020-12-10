@@ -9,6 +9,8 @@ spring:
     nacos:
       discovery:
         # nacos server 的地址
-        server-addr: localhost:8848
+        server-addr: 112.126.97.128:8848
+#        namespace: 65a56cb9-82d4-44a9-a08b-dd80d1e749f3
+#        cluster-name: XIAN
   application:
     name: user-center

@@ -37,16 +37,8 @@ public class ShareService {
         Share share = shareMapper.selectByPrimaryKey(id);
         Integer userId = share.getUserId();
 
-        // 获取用户中心所有实例信息
-        List<ServiceInstance> instanceList = discoveryClient.getInstances("user-center");
-        // 拿到所有用户中心的服务地址
-        List<String> targetUrlList = instanceList.stream()
-                .map(instance -> instance.getUri() + "/users/{id}")
-                .collect(Collectors.toList());
-
-        int index = ThreadLocalRandom.current().nextInt(targetUrlList.size());
-        String targetUrl = targetUrlList.get(index);
-        log.info("请求目标地址：{}", targetUrl);
+        // ribbon 会自动将 user-center 转换成用户中心在 nacos 上的地址，并进行负载均衡算法进行请求
+        String targetUrl = "http://user-center/users/{userId}";
 
         // 远程调用
         UserDTO userDTO = restTemplate.getForObject(targetUrl, UserDTO.class, userId);

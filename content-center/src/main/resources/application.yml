@@ -15,3 +15,7 @@ spring:
 
 server:
   port: 8010
+
+user-center:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule

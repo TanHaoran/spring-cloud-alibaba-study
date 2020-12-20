@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA
@@ -37,12 +39,13 @@ public class ShareService {
 
         // 获取用户中心所有实例信息
         List<ServiceInstance> instanceList = discoveryClient.getInstances("user-center");
-        // 拿到服务地址
-        String targetUrl = instanceList.stream()
+        // 拿到所有用户中心的服务地址
+        List<String> targetUrlList = instanceList.stream()
                 .map(instance -> instance.getUri() + "/users/{id}")
-                // 这里先返回第1个
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("当前没有实例"));
+                .collect(Collectors.toList());
+
+        int index = ThreadLocalRandom.current().nextInt(targetUrlList.size());
+        String targetUrl = targetUrlList.get(index);
         log.info("请求目标地址：{}", targetUrl);
 
         // 远程调用

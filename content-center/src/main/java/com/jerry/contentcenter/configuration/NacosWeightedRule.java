@@ -37,18 +37,18 @@ public class NacosWeightedRule extends AbstractLoadBalancerRule {
 
     @Override
     public Server choose(Object key) {
-        // ILoadBalancer 是 Ribbon 的入口
-        BaseLoadBalancer loadBalancer = (BaseLoadBalancer) getLoadBalancer();
-
-        // 请求的微服务名称
-        String name = loadBalancer.getName();
-
-        // 负载均衡算法
-        // 服务发现相关的 API
-        NamingService namingService = nacosDiscoveryProperties.namingServiceInstance();
-
         try {
-            // nacos client 自动通过基于权重的负载均衡算法选择一个实例
+            // ILoadBalancer 是 Ribbon 的入口
+            BaseLoadBalancer loadBalancer = (BaseLoadBalancer) getLoadBalancer();
+
+            // 请求的微服务名称
+            String name = loadBalancer.getName();
+
+            // 负载均衡算法
+            // 服务发现相关的 API
+            NamingService namingService = nacosDiscoveryProperties.namingServiceInstance();
+
+            // nacos client 自动通过基于权重的负载均衡算法选择一个实例，只拿健康的实例
             Instance instance = namingService.selectOneHealthyInstance(name);
             log.info("选择的实例是：port: {}, instance: {}", instance.getPort(), instance);
             return new NacosServer(instance);

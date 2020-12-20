@@ -10,6 +10,7 @@ spring:
       discovery:
         # nacos server 的地址
         server-addr: 112.126.97.128:8848
+        cluster-name: BJ
   application:
     name: content-center
 

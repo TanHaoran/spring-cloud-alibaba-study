@@ -1,5 +1,9 @@
 package com.jerry.contentcenter.configuration;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClients;
+import org.springframework.context.annotation.Configuration;
+import ribbonconfiguration.RibbonConfiguration;
+
 /**
  * Created with IntelliJ IDEA
  * User: Jerry
@@ -7,7 +11,7 @@ package com.jerry.contentcenter.configuration;
  * Time: 14:47
  * Description:
  */
-//@Configuration
-//@RibbonClient(name = "user-center", configuration = RibbonConfiguration.class)
+@Configuration
+@RibbonClients(defaultConfiguration = RibbonConfiguration.class)
 public class UserCenterRibbonConfiguration {
 }

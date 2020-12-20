@@ -3,7 +3,6 @@ package com.jerry.contentcenter.configuration;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
-import com.alibaba.nacos.client.naming.core.Balancer;
 import com.netflix.client.config.IClientConfig;
 import com.netflix.loadbalancer.AbstractLoadBalancerRule;
 import com.netflix.loadbalancer.BaseLoadBalancer;
@@ -14,7 +13,6 @@ import org.springframework.cloud.alibaba.nacos.NacosDiscoveryProperties;
 import org.springframework.cloud.alibaba.nacos.ribbon.NacosServer;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -56,7 +54,7 @@ public class NacosSameClusterWeightedRule extends AbstractLoadBalancerRule {
             ).collect(Collectors.toList());
 
             // 3、如果没有 B，就用 A
-            List<Instance> chooseInstanceList = new ArrayList<>();
+            List<Instance> chooseInstanceList;
             if (CollectionUtils.isEmpty(sameClusterInstanceList)) {
                 chooseInstanceList = instanceList;
                 log.warn("发生跨级群调用，name：{}, clusterName：{}，instanceList：{}", name, clusterName, instanceList);

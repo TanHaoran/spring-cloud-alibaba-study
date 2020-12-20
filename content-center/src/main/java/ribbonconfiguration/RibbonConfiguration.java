@@ -1,6 +1,6 @@
 package ribbonconfiguration;
 
-import com.jerry.contentcenter.configuration.NacosSameClusterWeightedRule;
+import com.jerry.contentcenter.configuration.NacosFinalRule;
 import com.netflix.loadbalancer.IRule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class RibbonConfiguration {
 
     @Bean
     public IRule ribbonRule() {
-        return new NacosSameClusterWeightedRule();
+        return new NacosFinalRule();
     }
 
 }

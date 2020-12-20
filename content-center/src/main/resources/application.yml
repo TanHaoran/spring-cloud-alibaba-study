@@ -11,6 +11,11 @@ spring:
         # nacos server 的地址
         server-addr: 112.126.97.128:8848
         cluster-name: BJ
+        metadata:
+          # 自己实例的版本
+          version: v1
+          # 允许调用的提供者版本
+          target-version: v1
   application:
     name: content-center
 

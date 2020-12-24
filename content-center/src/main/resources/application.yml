@@ -36,9 +36,12 @@ logging:
   level:
     com.jerry.contentcenter.feignclient.UserCenterFeignClient: debug
 
-#feign:
-#  client:
-#    config:
+feign:
+  client:
+    config:
 #      # 想要调用的微服务名称
 #      user-center:
 #        loggerLevel: full
+      # 全局配置
+      default:
+        loggerLevel: full

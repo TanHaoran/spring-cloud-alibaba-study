@@ -31,3 +31,7 @@ ribbon:
   eager-load:
     enabled: true
     clients: user-center
+
+logging:
+  level:
+    com.jerry.contentcenter.feignclient.UserCenterFeignClient: debug

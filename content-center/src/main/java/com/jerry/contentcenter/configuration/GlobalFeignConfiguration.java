@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
  * Time: 21:25
  * Description: feign 的配置类，这个类不要加 @Configuration 注解，否则必须放在启动类所在包之外
  */
-public class UserCenterFeignConfiguration {
+public class GlobalFeignConfiguration {
 
     @Bean
     public Logger.Level level() {

@@ -1,6 +1,5 @@
 package com.jerry.contentcenter.feignclient;
 
-import com.jerry.contentcenter.configuration.UserCenterFeignConfiguration;
 import com.jerry.contentcenter.domain.dto.user.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
  * Time: 20:31
  * Description:
  */
-@FeignClient(name = "user-center", configuration = UserCenterFeignConfiguration.class)
+//@FeignClient(name = "user-center", configuration = UserCenterFeignConfiguration.class)
+@FeignClient(name = "user-center")
 public interface UserCenterFeignClient {
 
     /**

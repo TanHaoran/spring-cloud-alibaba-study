@@ -4,6 +4,7 @@ import com.jerry.contentcenter.dao.content.ShareMapper;
 import com.jerry.contentcenter.domain.content.ShareDTO;
 import com.jerry.contentcenter.domain.dto.user.UserDTO;
 import com.jerry.contentcenter.domain.entity.content.Share;
+import com.jerry.contentcenter.feignclient.UserCenterFeignClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -30,18 +31,15 @@ import java.util.stream.Collectors;
 public class ShareService {
 
     private final ShareMapper shareMapper;
-    private final RestTemplate restTemplate;
-    private final DiscoveryClient discoveryClient;
+    private final UserCenterFeignClient userCenterFeignClient;
 
     public ShareDTO findById(Integer id) {
         Share share = shareMapper.selectByPrimaryKey(id);
         Integer userId = share.getUserId();
 
-        // ribbon 会自动将 user-center 转换成用户中心在 nacos 上的地址，并进行负载均衡算法进行请求
-        String targetUrl = "http://user-center/users/{userId}";
-
         // 远程调用
-        UserDTO userDTO = restTemplate.getForObject(targetUrl, UserDTO.class, userId);
+        UserDTO userDTO = userCenterFeignClient.findById(userId);
+
         // 消息装配
         ShareDTO shareDTO = new ShareDTO();
         BeanUtils.copyProperties(share, shareDTO);

@@ -5,6 +5,7 @@ import com.jerry.usercenter.domain.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -32,4 +33,15 @@ public class TestController {
         userMapper.insertSelective(user);
         return user;
     }
+
+    @GetMapping("/query")
+    public User query(User user) {
+        return user;
+    }
+
+    @PostMapping("/add")
+    public User save(User user) {
+        return user;
+    }
+
 }

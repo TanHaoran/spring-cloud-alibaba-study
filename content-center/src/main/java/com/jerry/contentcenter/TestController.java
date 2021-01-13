@@ -1,15 +1,20 @@
 package com.jerry.contentcenter;
 
+import com.google.common.collect.Maps;
 import com.jerry.contentcenter.dao.content.ShareMapper;
+import com.jerry.contentcenter.domain.dto.user.UserDTO;
 import com.jerry.contentcenter.domain.entity.content.Share;
+import com.jerry.contentcenter.feignclient.TestUserCenterFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,6 +31,8 @@ public class TestController {
     private final ShareMapper shareMapper;
 
     private final DiscoveryClient discoveryClient;
+
+    private final TestUserCenterFeignClient testUserCenterFeignClient;
 
     @GetMapping("/test")
     public List<Share> testInsert() {
@@ -56,6 +63,29 @@ public class TestController {
     public List<String> testServices() {
         // 查询注册的所有微服务
         return discoveryClient.getServices();
+    }
+
+    @GetMapping("/test/query")
+    public UserDTO query(UserDTO userDTO) {
+        return testUserCenterFeignClient.query(userDTO);
+    }
+
+    @GetMapping("/test/query2")
+    public UserDTO query2() {
+        return testUserCenterFeignClient.query2(1L, "test2");
+    }
+
+    @GetMapping("/test/query3")
+    public UserDTO query3() {
+        HashMap<String, Object> map = Maps.newHashMap();
+        map.put("id", "1");
+        map.put("wxId", "test3");
+        return testUserCenterFeignClient.query3(map);
+    }
+
+    @PostMapping("/add")
+    public UserDTO save() {
+        return testUserCenterFeignClient.save(new UserDTO());
     }
 
 }

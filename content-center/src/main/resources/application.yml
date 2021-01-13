@@ -19,6 +19,8 @@ spring:
           target-version: v1
   application:
     name: content-center
+  main:
+    allow-bean-definition-overriding: true
 
 server:
   port: 8010

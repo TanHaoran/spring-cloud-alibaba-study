@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.jerry.contentcenter.dao.content.ShareMapper;
 import com.jerry.contentcenter.domain.dto.user.UserDTO;
 import com.jerry.contentcenter.domain.entity.content.Share;
+import com.jerry.contentcenter.feignclient.TestBaiduFeignClient;
 import com.jerry.contentcenter.feignclient.TestUserCenterFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class TestController {
     private final DiscoveryClient discoveryClient;
 
     private final TestUserCenterFeignClient testUserCenterFeignClient;
+
+    private final TestBaiduFeignClient testBaiduFeignClient;
 
     @GetMapping("/test")
     public List<Share> testInsert() {
@@ -86,6 +89,11 @@ public class TestController {
     @PostMapping("/add")
     public UserDTO save() {
         return testUserCenterFeignClient.save(new UserDTO());
+    }
+
+    @GetMapping("/baidu")
+    public String baiduIndex() {
+        return testBaiduFeignClient.index();
     }
 
 }

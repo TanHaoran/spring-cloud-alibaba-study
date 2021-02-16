@@ -17,6 +17,10 @@ spring:
           version: v1
           # 允许调用的提供者版本
           target-version: v1
+    sentinel:
+      transport:
+        # 指定 sentinel 控制台地址
+        dashboard: localhost:8080
   application:
     name: content-center
   main:

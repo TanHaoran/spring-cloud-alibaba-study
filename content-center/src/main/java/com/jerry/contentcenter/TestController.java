@@ -37,6 +37,8 @@ public class TestController {
 
     private final TestBaiduFeignClient testBaiduFeignClient;
 
+    private final TestService testService;
+
     @GetMapping("/test")
     public List<Share> testInsert() {
         Share share = new Share();
@@ -94,6 +96,18 @@ public class TestController {
     @GetMapping("/baidu")
     public String baiduIndex() {
         return testBaiduFeignClient.index();
+    }
+
+    @GetMapping("/testA")
+    public String testA() {
+        testService.common();
+        return "testA";
+    }
+
+    @GetMapping("/testB")
+    public String testB() {
+        testService.common();
+        return "testB";
     }
 
 }

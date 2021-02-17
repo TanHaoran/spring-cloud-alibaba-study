@@ -49,8 +49,7 @@ public class TestController {
         share.setAuthor("jerry");
         share.setBuyCount(1);
         shareMapper.insertSelective(share);
-        List<Share> shareList = shareMapper.selectAll();
-        return shareList;
+        return shareMapper.selectAll();
     }
 
     /**

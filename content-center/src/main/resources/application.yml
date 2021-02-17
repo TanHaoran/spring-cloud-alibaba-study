@@ -21,6 +21,7 @@ spring:
       transport:
         # 指定 sentinel 控制台地址
         dashboard: localhost:8080
+  # 配置服务的名称
   application:
     name: content-center
   main:

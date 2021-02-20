@@ -38,22 +38,22 @@ public class NacosSameClusterWeightedRule extends AbstractLoadBalancerRule {
     @Override
     public Server choose(Object key) {
         try {
-            // 获取配置文件中的集群名称 BJ
+            // 获取配置文件中本服务的集群名称 BJ
             String clusterName = nacosDiscoveryProperties.getClusterName();
 
             BaseLoadBalancer loadBalancer = (BaseLoadBalancer) getLoadBalancer();
             String name = loadBalancer.getName();
             NamingService namingService = nacosDiscoveryProperties.namingServiceInstance();
 
-            // 1、找到指定服务的所有实例 A，只拿健康的实例
+            // 1、找到指定服务的所有实例 A集合，只拿健康的实例
             List<Instance> instanceList = namingService.selectInstances(name, true);
 
-            // 2、过滤出相同集群下的所有实例 B
+            // 2、过滤出相同集群下的所有实例 B集合
             List<Instance> sameClusterInstanceList = instanceList.stream().filter(
                     instance -> Objects.equals(instance.getClusterName(), clusterName)
             ).collect(Collectors.toList());
 
-            // 3、如果没有 B，就用 A
+            // 3、如果 B集合为空，就用 A集合
             List<Instance> chooseInstanceList;
             if (CollectionUtils.isEmpty(sameClusterInstanceList)) {
                 chooseInstanceList = instanceList;

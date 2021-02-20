@@ -39,10 +39,10 @@ public class NacosFinalRule extends AbstractLoadBalancerRule {
         // 负载均衡规则：优先选择同集群下，符合metadata的实例
         // 如果没有，就选择所有集群下，符合metadata的实例
 
-        // 1. 查询所有实例 A
-        // 2. 筛选元数据匹配的实例 B
-        // 3. 筛选出同cluster下元数据匹配的实例 C
-        // 4. 如果C为空，就用B
+        // 1. 查询所有实例 A集合
+        // 2. 筛选元数据匹配的实例 B集合
+        // 3. 筛选出同cluster下元数据匹配的实例 C集合
+        // 4. 如果C集合为空，就用B集合
         // 5. 随机选择实例
         try {
             String clusterName = nacosDiscoveryProperties.getClusterName();
@@ -53,7 +53,7 @@ public class NacosFinalRule extends AbstractLoadBalancerRule {
 
             NamingService namingService = nacosDiscoveryProperties.namingServiceInstance();
 
-            // 所有实例
+            // 所有健康实例
             List<Instance> instanceList = namingService.selectInstances(name, true);
 
             List<Instance> metadataMatchInstanceList = instanceList;

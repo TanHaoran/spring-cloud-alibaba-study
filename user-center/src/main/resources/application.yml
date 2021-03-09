@@ -18,4 +18,4 @@ spring:
   application:
     name: user-center
 server:
-  port: 8081
+  port: 8080

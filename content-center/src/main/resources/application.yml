@@ -20,7 +20,7 @@ spring:
     sentinel:
       transport:
         # 指定 sentinel 控制台地址
-        dashboard: 112.126.97.128:8080
+        dashboard: localhost:8849
   # 配置服务的名称
   application:
     name: content-center

@@ -1,6 +1,9 @@
 package com.jerry.contentcenter;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import com.google.common.collect.Maps;
 import com.jerry.contentcenter.dao.content.ShareMapper;
 import com.jerry.contentcenter.domain.dto.user.UserDTO;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -115,6 +119,22 @@ public class TestController {
     @GetMapping("/testHot")
     public String testHot(@RequestParam(required = false) String a, @RequestParam(required = false) String b) {
         return a + " " + b;
+    }
+
+    @GetMapping("/testAddFlowRule")
+    public String testAddFlowRule() {
+        initFlowQpsRule();
+        return "success";
+    }
+
+    private void initFlowQpsRule() {
+        List<FlowRule> ruleList = new ArrayList<>();
+        FlowRule rule = new FlowRule("/shares/1");
+        rule.setCount(20);
+        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule.setLimitApp("default");
+        ruleList.add(rule);
+        FlowRuleManager.loadRules(ruleList);
     }
 
 }

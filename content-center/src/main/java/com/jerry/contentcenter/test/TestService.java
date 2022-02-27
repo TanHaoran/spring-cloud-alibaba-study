@@ -1,4 +1,4 @@
-package com.jerry.contentcenter;
+package com.jerry.contentcenter.test;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import lombok.extern.slf4j.Slf4j;

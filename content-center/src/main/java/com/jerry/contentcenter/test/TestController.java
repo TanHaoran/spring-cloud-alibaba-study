@@ -1,6 +1,11 @@
-package com.jerry.contentcenter;
+package com.jerry.contentcenter.test;
 
+import com.alibaba.csp.sentinel.Entry;
+import com.alibaba.csp.sentinel.SphU;
+import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.context.ContextUtil;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
@@ -11,6 +16,8 @@ import com.jerry.contentcenter.domain.entity.content.Share;
 import com.jerry.contentcenter.feignclient.TestBaiduFeignClient;
 import com.jerry.contentcenter.feignclient.TestUserCenterFeignClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -33,6 +40,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 public class TestController {
 
     private final ShareMapper shareMapper;
@@ -135,6 +143,37 @@ public class TestController {
         rule.setLimitApp("default");
         ruleList.add(rule);
         FlowRuleManager.loadRules(ruleList);
+    }
+
+    @GetMapping("/testSentinelAPI")
+    public String testSentinelAPI(@RequestParam(required = false) String a) {
+        String resourceName = "test-sentinel-api";
+        ContextUtil.enter(resourceName, "test-service");
+        // 定义一个 sentinel 保护的资源，名称是 test-sentinel-api
+        Entry entry = null;
+        try {
+            entry = SphU.entry(resourceName);
+            // 被保护的业务逻辑
+            if (StringUtils.isBlank(a)) {
+                throw new IllegalArgumentException("a 不能为空");
+            }
+            return a;
+        }
+        // 如果被保护的资源被限流或者降级了，就会抛 BlockException 异常
+        catch (BlockException e) {
+            log.warn("限流或者降级了", e);
+            e.printStackTrace();
+            return "限流或者降级了";
+        } catch (IllegalArgumentException e2) {
+            // 统计 IllegalArgumentException（发生次数、占比等）
+            Tracer.trace(e2);
+            return "非法参数";
+        } finally {
+            if (entry != null) {
+                entry.exit();
+            }
+            ContextUtil.exit();
+        }
     }
 
 }

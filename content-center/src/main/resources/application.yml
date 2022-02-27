@@ -10,7 +10,7 @@ spring:
       discovery:
         # nacos server 的地址
         server-addr: 112.126.97.128:8848
-#        namespace: 65a56cb9-82d4-44a9-a08b-dd80d1e749f3
+        # namespace: 65a56cb9-82d4-44a9-a08b-dd80d1e749f3
         cluster-name: BJ
         metadata:
           # 自己实例的版本
@@ -21,6 +21,12 @@ spring:
       transport:
         # 指定 sentinel 控制台地址
         dashboard: localhost:8849
+        # 指定和控制台通信的ip，如果不配置，则会自动选一个ip注册
+        client-ip: 127.0.0.1
+        # 指定和控制台通信的端口，默认8719，如果不设置，，会自动从8719开始扫描，依次+1，直到找到未被占用的端口
+        port: 8719
+        # 心跳发送周期，默认值null，但在 SimpleHttpHeartbeatSender 会用默认值10秒
+        heartbeat-interval-ms: 10000
   # 配置服务的名称
   application:
     name: content-center
